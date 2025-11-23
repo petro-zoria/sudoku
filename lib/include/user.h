@@ -8,7 +8,7 @@
 #include "board.h"
 
 void board_print(Sudoku *s);    /*
-відображає ігрове поле у терміналі
+відображає ігрове поле у консолі
 */
 
 #endif // USER

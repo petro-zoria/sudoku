@@ -12,7 +12,7 @@
 
 //Константи кольорів за допомогою ANSI
 #define RESET "\033[0m"     //скидання до стандартного
-#define RED "\033[31m"      //червоний колір
+#define RED "\033[31m"      //червоний колір 
 #define GREEN "\033[32m"    //зелений колір
 #define CYAN "\033[36m"
 
@@ -21,8 +21,8 @@
 typedef struct {
     int board[SIZE][SIZE];          //поточний стан ігрового поля
     int solution[SIZE][SIZE];       //правильне рішення (для перевірки)
-    bool fixed[SIZE][SIZE];         //прапорець: тру якщо клітинку не можна змінювати (фіксована)
-    bool initial[SIZE][SIZE];       //прапорець: тру якщо число було згенероване граю 
+    bool fixed[SIZE][SIZE];         //прапорець: true якщо клітинку не можна змінювати (фіксована)
+    bool initial[SIZE][SIZE];       //прапорець: true якщо число було згенероване граю 
 } Sudoku;
 
 void board_init(Sudoku *s); /*
