@@ -22,7 +22,7 @@ MAIN_OBJ = $(BIN_DIR)/main.o
 all: prepare $(TARGET)		#головна ціль
 
 prepare:
-	@mkdir -p $(BIN_DIR)		
+	if not exist $(BIN_DIR) mkdir $(BIN_DIR)	
 #створення папки бін
 
 $(LIBRARY): prepare

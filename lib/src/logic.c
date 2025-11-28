@@ -5,16 +5,16 @@
 #include <stdbool.h>
 #include <string.h>
 
-bool valid_check(int board[SIZE][SIZE], int row, int col, int num) {        //функція перевірки правильності ходу гравця
+bool valid_check(int board[SIZE_BOARD][SIZE_BOARD], int row, int col, int num) {        //функція перевірки правильності ходу гравця
     
     //перевірка рядка
-    for (int i = 0; i < SIZE; i++) {
+    for (int i = 0; i < SIZE_BOARD; i++) {
         if (board[row][i] == num) {         //проходимо по всім рядам, якщо є це число - то повертаємо фолс
             return false;
         }
     }
     //перевірка стовпця
-    for (int i = 0; i < SIZE; i++) {        //проходимо по всім стовпцям, якщо є це число - повертаємо фолс
+    for (int i = 0; i < SIZE_BOARD; i++) {        //проходимо по всім стовпцям, якщо є це число - повертаємо фолс
         if (board[i][col] == num) {
             return false;
         }
@@ -34,12 +34,12 @@ bool valid_check(int board[SIZE][SIZE], int row, int col, int num) {        //ф
     return true;    //якщо нема помилки - число можна ставити
 }
 
-bool sudoku_solve(int board[SIZE][SIZE], int row, int col) {        //функція розв'язання використовуючи бектрекінг
+bool sudoku_solve(int board[SIZE_BOARD][SIZE_BOARD], int row, int col) {        //функція розв'язання використовуючи бектрекінг
 
-    if (row == SIZE - 1 && col == SIZE) {   //якщо дійшли до кінця дошки - рішення знайдено (вихід)
+    if (row == SIZE_BOARD - 1 && col == SIZE_BOARD) {   //якщо дійшли до кінця дошки - рішення знайдено (вихід)
         return true;
     }
-    if (col == SIZE)  {     //якщо дійшли до кінця рядка - переходимо на наступний рядок, перший стовпець
+    if (col == SIZE_BOARD)  {     //якщо дійшли до кінця рядка - переходимо на наступний рядок, перший стовпець
         row++;
         col = 0; 
     }
@@ -48,19 +48,19 @@ bool sudoku_solve(int board[SIZE][SIZE], int row, int col) {        //функц
         return sudoku_solve(board, row, col + 1);   //ідемо до наступної
     }
 
-    int nums[SIZE];
-    for (int i = 0; i < SIZE; i++) {    //створюємо массив чисел, аби пробувати їх у випадковому порядку
+    int nums[SIZE_BOARD];
+    for (int i = 0; i < SIZE_BOARD; i++) {    //створюємо массив чисел, аби пробувати їх у випадковому порядку
         nums[i] = i + 1;
     }
 
-    for (int i = SIZE - 1; i > 0; i--) {   //переміщуєм числа у массиві 
+    for (int i = SIZE_BOARD - 1; i > 0; i--) {   //переміщуєм числа у массиві 
         int j = rand() % (i + 1);
         int temp = nums[i];
         nums[i] = nums[j];
         nums[j] = temp;
     }
 
-    for (int i = 0; i < SIZE; i++) {        
+    for (int i = 0; i < SIZE_BOARD; i++) {        
         int num = nums[i];          //беремо рандомне число
         if (valid_check(board, row, col, num)) {    //якщо правила дозволяють..
             board[row][col] = num;                  //..ставимо це число
@@ -74,8 +74,8 @@ bool sudoku_solve(int board[SIZE][SIZE], int row, int col) {        //функц
 }
 
 bool win_check(Sudoku *s) {     //функція перевірки перемоги
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
+    for (int i = 0; i < SIZE_BOARD; i++) {
+        for (int j = 0; j < SIZE_BOARD; j++) {
             if (s->board[i][j] != s->solution[i][j])    //перевіряє дошку гравця з дошкою рішення
             return false;
         }
@@ -83,9 +83,9 @@ bool win_check(Sudoku *s) {     //функція перевірки перемо
     return true;
 }
 
-bool solution_check(int board[SIZE][SIZE]) {        //функція для перевірки внутрішніх конфліктів дошки
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
+bool solution_check(int board[SIZE_BOARD][SIZE_BOARD]) {        //функція для перевірки внутрішніх конфліктів дошки
+    for (int i = 0; i < SIZE_BOARD; i++) {
+        for (int j = 0; j < SIZE_BOARD; j++) {
             int num = board[i][j];
             board[i][j] = EMPTY;        //тимчасово прибираємо це число
             
@@ -111,8 +111,8 @@ void sudoku_generate(Sudoku *s) {       //генерація гри
         }
     }
 
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
+    for (int i = 0; i < SIZE_BOARD; i++) {
+        for (int j = 0; j < SIZE_BOARD; j++) {
             s->board[i][j] = s->solution[i][j];     //копіюємо в нашу дошку наше правильне рішення
         }
     }
@@ -121,8 +121,8 @@ void sudoku_generate(Sudoku *s) {       //генерація гри
     int removed = 0;                            //скільки видалено
     
     while (removed < cells_to_remove) {         //поки видалено менше ніж треба
-        int row = rand() % SIZE;                //випадковий рядок
-        int col = rand() % SIZE;                //випадковий стовпець
+        int row = rand() % SIZE_BOARD;                //випадковий рядок
+        int col = rand() % SIZE_BOARD;                //випадковий стовпець
         
         if (s->board[row][col] != EMPTY) {      //видаляємо тільки якщо є число
             s->board[row][col] = EMPTY;
@@ -130,8 +130,8 @@ void sudoku_generate(Sudoku *s) {       //генерація гри
         }
     }
 
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
+    for (int i = 0; i < SIZE_BOARD; i++) {
+        for (int j = 0; j < SIZE_BOARD; j++) {
 
             if (s->board[i][j] != EMPTY) {          //якщо число залишилось після видалення - воно початкове 
                 s->fixed[i][j] = true;              //фіксуємо

@@ -6,8 +6,20 @@
 #include "logic.h"
 #include "user.h"
 #include "board.h"
+#include <locale.h>
+
+#ifdef _WIN32
+    #include <windows.h> //підключаємо бібліотеку для роботи з консоллю Windows
+#endif
 
 int main() {
+#ifdef _WIN32
+        //якщо це Windows, встановлюємо кодування UTF-8 для консолі
+        SetConsoleOutputCP(65001);
+    #else
+        //для інших систем встановлюємо локаль
+        setlocale(LC_ALL, "");
+    #endif
 
     srand(time(NULL));      //ініціалізуємо рандом за часом
     Sudoku s;               //створюємо змінну с типу Судоку
@@ -33,7 +45,7 @@ int main() {
             row--; col--;       //массиви починаються з 0, тому -1
             
             //перевірка меж
-            if (row < 0 || row >= SIZE || col < 0 || col >= SIZE) {    //якщо числа менше   нуля або більше 9
+            if (row < 0 || row >= SIZE_BOARD || col < 0 || col >= SIZE_BOARD) {    //якщо числа менше   нуля або більше 9
                 printf("\n%sНевірні координати!%s\n", RED, RESET);     //помилка
                 printf("Enter..."); getchar(); continue;                //гетчар аби гравець побачив помилку
             }

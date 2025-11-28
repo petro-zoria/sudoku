@@ -6,7 +6,7 @@
 #include <stdbool.h>
 #include <string.h>
 
-#define SIZE 9          //константа розміру ігрового поля (9)
+#define SIZE_BOARD 9          //константа розміру ігрового поля (9)
 #define SUBGRID 3           //константа розміру малого квадрату 3х3
 #define EMPTY 0             //константа порожньої клітинки
 
@@ -19,10 +19,10 @@
 
 //Головна структура данних
 typedef struct {
-    int board[SIZE][SIZE];          //поточний стан ігрового поля
-    int solution[SIZE][SIZE];       //правильне рішення (для перевірки)
-    bool fixed[SIZE][SIZE];         //прапорець: true якщо клітинку не можна змінювати (фіксована)
-    bool initial[SIZE][SIZE];       //прапорець: true якщо число було згенероване граю 
+    int board[SIZE_BOARD][SIZE_BOARD];          //поточний стан ігрового поля
+    int solution[SIZE_BOARD][SIZE_BOARD];       //правильне рішення (для перевірки)
+    bool fixed[SIZE_BOARD][SIZE_BOARD];         //прапорець: true якщо клітинку не можна змінювати (фіксована)
+    bool initial[SIZE_BOARD][SIZE_BOARD];       //прапорець: true якщо число було згенероване граю 
 } Sudoku;
 
 void board_init(Sudoku *s); /*
