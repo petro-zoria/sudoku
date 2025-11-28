@@ -30,7 +30,7 @@ The project uses a standard Makefile for compilation.
 
 1. Clone the Repository
 
-* git clone https://github.com/petro-zoria/intro_to_programming_2025.git
+* git clone https://github.com/petro-zoria/sudoku.git
 
 * cd sudoku
 
