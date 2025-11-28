@@ -17,12 +17,22 @@ LIBRARY = $(BIN_DIR)/libsudoku.a
 MAIN_OBJ = $(BIN_DIR)/main.o
 #шлях об'єктного файлу мейна
 
+ifeq ($(OS),Windows_NT)
+	MKDIR_P = if not exist $(BIN_DIR) mkdir $(BIN_DIR)
+	RM_CMD = del /Q /F
+	RMDIR_CMD = rmdir /S /Q
+else
+	MKDIR_P = mkdir -p $(BIN_DIR)
+	RM_CMD = rm -f
+	RMDIR_CMD = rm -rf
+endif
+
 .PHONY: all prepare clean memcheck		#оголошення цілей
 
 all: prepare $(TARGET)		#головна ціль
 
 prepare:
-	if not exist $(BIN_DIR) mkdir $(BIN_DIR)	
+	$(MKDIR_P)
 #створення папки бін
 
 $(LIBRARY): prepare
@@ -47,6 +57,6 @@ memcheck: all
 
 clean:
 	@echo "--- [ROOT] Cleaning ---"
-	rm -rf $(BIN_DIR)
-	rm -f $(TARGET)
+	$(RMDIR_CMD) $(BIN_DIR)
+	$(RM_CMD) $(TARGET)
 #правило для кліна

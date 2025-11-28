@@ -14,6 +14,14 @@ OBJS = $(patsubst src/%.c, $(BIN_DIR)/%.o, $(SRCS))
 # шлях до бібліотеки яку створимо
 TARGET = $(BIN_DIR)/libsudoku.a
 
+ifeq ($(OS),Windows_NT)
+    RM_CMD = del /Q /F
+    FIX_PATH = $(subst /,\,$1)
+else
+    RM_CMD = rm -f
+    FIX_PATH = $1
+endif
+
 # алл, клін - команди
 .PHONY: all clean
 
@@ -29,8 +37,8 @@ $(TARGET): $(OBJS)
 $(BIN_DIR)/%.o: src/%.c
 	@echo "--- [LIB] Compiling $< to $@"
 	$(CC) $(CFLAGS) -c $< -o $@
-
 # правило очищення
 clean:
 	@echo "--- [LIB] Cleaning artifacts ---"
-	rm -f $(OBJS) $(TARGET)
+	$(RM_CMD) $(call FIX_PATH,$(OBJS))
+	$(RM_CMD) $(call FIX_PATH,$(TARGET))
