@@ -4,6 +4,7 @@
 #include <time.h>
 #include <stdbool.h>
 #include <string.h>
+#define CELLS_TO_REMOVE 35   //кількість клітинок для видалення з дошки
 
 bool valid_check(int board[SIZE_BOARD][SIZE_BOARD], int row, int col, int num) {        //функція перевірки правильності ходу гравця
     
@@ -117,7 +118,7 @@ void sudoku_generate(Sudoku *s) {       //генерація гри
         }
     }
 
-    const int cells_to_remove = 35;             //скільки клітинок видалити
+    const int cells_to_remove = CELLS_TO_REMOVE;   //скільки клітинок видалити
     int removed = 0;                            //скільки видалено
     
     while (removed < cells_to_remove) {         //поки видалено менше ніж треба
